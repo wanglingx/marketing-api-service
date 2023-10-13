@@ -1,4 +1,4 @@
-# mvc-template-ver1
-# npm i
-# npm install express
-# npm install mysql
+# Marketing API Service
+npm i
+npm install express
+npm install mysql
