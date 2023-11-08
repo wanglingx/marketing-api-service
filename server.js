@@ -1,20 +1,19 @@
-const soap = require('soap');
-const fs = require('fs');
-const services = require('./routes')
-const connectDB = require('./config/database'); 
-connectDB(); 
+const express = require('express');
+const soap = require('soap');``
+const app = express();
+const soapPort = 3000;
+const services = require('./routes');
+const connectDB = require('./config/database');
 
-// Create the SOAP servers for each service
-const wsdlPaths = {
-  WeatherService: './wsdl/weatherService.wsdl',
-  ProductService: './wsdl/productService.wsdl',
-  // ... Provide WSDL paths for the remaining four services
-};
-
-for (const serviceName in wsdlPaths) {
-  const xml = require('fs').readFileSync(wsdlPaths[serviceName], 'utf8');
-  const server = soap.listen({ path: `/${serviceName}`, xml: xml }, function() {
-    console.log(`SOAP server for ${serviceName} running at http://localhost:8000/${serviceName}?wsdl`);
-  });
-  server.addService(xml, services[serviceName], { suppressStack: true });
-}
+// Create a SOAP server and listen for SOAP requests
+app.listen(soapPort, function () {
+    connectDB()
+    .then(() => {
+      const wsdlPath = './wsdl/ShippingService.wsdl';
+      const xml = require('fs').readFileSync(wsdlPath, 'utf8');
+      const soapServer = soap.listen(app, '/shipping', services, xml);
+    })
+    .catch((err) => {
+      console.error('Error starting the application:', err);
+    });
+});
