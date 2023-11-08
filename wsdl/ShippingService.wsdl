@@ -38,7 +38,7 @@
 
   <service name="shippingService">
     <port name="shippingCostPort" binding="tns:shippingCostBinding">
-      <soap:address location="http://localhost:3000/shipping"/>
+      <soap:address location="http://192.168.1.110:3000/shipping"/>
     </port>
   </service>
 
