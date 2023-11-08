@@ -28,7 +28,6 @@ server.use(helmet({
   },
 }));
 
-// Logging (only in development)
 if (process.env.NODE_ENV === 'development') {
   server.use(morgan('dev'));
 }
@@ -42,7 +41,6 @@ server.use(
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   })
 );
-
 const connectDB = require('./config/connector'); 
 connectDB(); 
 

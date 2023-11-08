@@ -1,7 +1,13 @@
 const Orders = require('../Orders/OrdersSchema')
 const OrderDetails = require('../Orders/OrderDetailSchema')
+const repo = require('../../repository/repository')
 
 class OrdersProcess {
+    constructor() {
+        this.OrderDetailsRepo = repo.OrderDetailsRepo
+        this.OrderRepo = repo.OrdersRepo
+    }
+
     order = async(req, res) => {
         // ตรวจสอบความถูกต้องของข้อมูล
         if (!req.body.ID_order || !req.body.Name || !req.body.Address || !req.body.Tel || !req.body.Order_date || !req.body.Sent_date || !req.body.Total_Price || !req.body.Discount || !req.body.Vat || !req.body.Shipping_cost || !req.body.Net_balance || !req.body.Order_status) {
@@ -88,7 +94,6 @@ class OrdersProcess {
         }
 
         // ยิง API ไปหาคนอื่น
-
         // ตอบกลับ
         return res.json({
             success: true

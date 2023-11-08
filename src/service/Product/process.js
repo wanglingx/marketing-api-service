@@ -1,51 +1,70 @@
 const Products = require('./ProductSchema')
+const repo = require('../../repository/repository')
 class ProductProcess {
-    newProduct = async(req, res) => {
-        // ตรวจสอบความถูกต้องของข้อมูล
-        if (!req.body.ID_product || !req.body.Product_name || !req.body.Product_price || !req.body.Product_stock || !req.body.Exp_date || !req.body.Product_status) {
-            return res.status(400).json({
-                error: "ข้อมูลไม่ถูกต้อง"
-            });
-        }
-        // เขียนข้อมูลลงฐานข้อมูล
-        const product = new Products({
-            ID_product: req.body.ID_product,
-            Product_name: req.body.Product_name,
-            Product_price: req.body.Product_price,
-            Product_stock: req.body.Product_stock,
-            Exp_date: req.body.Exp_date,
-            Product_status: req.body.Product_status
-        });
-        await product.save();
 
-        // ตอบกลับ
-        return res.status(201).send({ response : product });
+    constructor() {
+        this.ProductRepo = repo.ProductRepo
     }
 
-    updateProduct = async (req, res) => { 
+    newProduct = async (req, res) => {
+        this.ProductRepo.ID_product     = req.body.ID_product
+        this.ProductRepo.Product_name   = req.body.Product_name
+        this.ProductRepo.Product_price  = req.body.Product_price
+        this.ProductRepo.Product_stock  = req.body.Product_stock
+        this.ProductRepo.Exp_date       = req.body.Exp_date
+        this.ProductRepo.Product_status = req.body.Product_status
+
         // ตรวจสอบความถูกต้องของข้อมูล
-        if (!req.params.id) {
+        if (!this.ProductRepo) {
+            console.log(`[ERROR] New Products Data Not Found`)
             return res.status(400).json({
-                error: "ข้อมูลไม่ถูกต้อง"
-            });
-        }
-
-        // ค้นหาสินค้าจากฐานข้อมูล
-        const product = await Products.findOne({ ID_product : req.params.id });
-
-        if (!product) {
-            return res.status(404).json({
-                error: "สินค้าไม่พบ"
+                error: "New Products Data Not Found"
             });
         }
         else {
+            console.log(`[INFO] New Products Data Found`)
+            // เขียนข้อมูลลงฐานข้อมูล
+            const product = new Products({
+                ID_product      : this.ProductRepo.ID_product,
+                Product_name    : this.ProductRepo.Product_name,
+                Product_price   : this.ProductRepo.Product_price,
+                Product_stock   : this.ProductRepo.Product_stock,
+                Exp_date        : this.ProductRepo.Exp_date,
+                Product_status  : this.ProductRepo.Product_status
+            });
+            await product.save();
+            console.log(`[INFO] Save New Products to database success`)
+            return res.status(201).send({ response : product });
+        }
+    }
+
+    updateProduct = async (req, res) => {
+        this.ProductRepo.ID_product     = req.params.id
+        this.ProductRepo.Product_price  = req.body.Product_price
+        this.ProductRepo.Product_stock  = req.body.Product_stock
+        // ตรวจสอบความถูกต้องของข้อมูล
+        if (!this.ProductRepo.ID_product) {
+            console.log(`[ERROR] ID Products Not Found`)
+            return res.status(400).json({
+                error: "ID Products Not Found"
+            });
+        }
+        // ค้นหาสินค้าจากฐานข้อมูล
+        const product = await Products.findOne({ ID_product : this.ProductRepo.ID_product });
+        console.log(`[INFO] Getting Products By ID ${product}`)
+
+        if (!product) {
+            console.log(`[ERROR] Product Not Found`)
+            return res.status(404).json({
+                error: "Product Not Found"
+            });
+        }
+        else {
+            console.log(`[INFO] Getting Products By ID ${product}`)
              // อัพเดทข้อมูลสินค้า
             const updatedProduct = {
-                //Product_name: req.body.Product_name,
                 Product_price: req.body.Product_price,
                 Product_stock: req.body.Product_stock,
-                //Exp_date: req.body.Exp_date,
-                //Product_status: req.body.Product_status,
             };
 
             Products.updateOne({ ID_product: req.params.id }, { $set: updatedProduct })
@@ -67,15 +86,8 @@ class ProductProcess {
                 .catch(error => {
                     console.error('[ERROR] Error updating product:', error);
                     return res.status(500).json({ error: "An error occurred while updating the product" });
-                });
+            });
         }
-        // product.Product_name = req.body.Product_name;
-        // product.Product_price = req.body.Product_price;
-        // product.Product_stock = req.body.Product_stock;
-        // product.Exp_date = req.body.Exp_date;
-        // product.Product_status = req.body.Product_status;
-        // await product.save();
-        // ตอบกลับ
     }
     
 }

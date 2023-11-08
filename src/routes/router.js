@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const { ProductProcess } = require('../service/Product/process');
-const { ShippingProcess } = require('../service/Shipping/Process');
+const { ShippingProcess } = require('../service/Shipping/process');
 const { OrdersProcess } = require('../service/Orders/process');
 
 /** Product */
