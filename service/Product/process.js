@@ -63,18 +63,18 @@ class ProductProcess {
             console.log(`[INFO] Getting Products By ID ${product}`)
              // อัพเดทข้อมูลสินค้า
             const updatedProduct = {
-                Product_price: req.body.Product_price,
-                Product_stock: req.body.Product_stock,
+                Product_price: this.ProductRepo.Product_price,
+                Product_stock: this.ProductRepo.Product_stock,
             };
 
-            Products.updateOne({ ID_product: req.params.id }, { $set: updatedProduct })
+            Products.updateOne({ ID_product: this.ProductRepo.ID_product }, { $set: updatedProduct })
                 .then(result => {
                     if (result.nModified === 0) {
                     return res.status(404).json({ error: "Product not found" });
                     }
                     console.log('[INFO] Product updated successfully')
                     // Fetch the updated product
-                    Products.findOne({ ID_product: req.params.id })
+                    Products.findOne({ ID_product: this.ProductRepo.ID_product })
                         .then(updatedProduct => {
                             return res.status(200).json({ response: updatedProduct });
                         })
