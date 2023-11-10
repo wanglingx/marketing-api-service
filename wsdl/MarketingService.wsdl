@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="Marketing"
+  targetNamespace="http://example.org/Marketing"
+  xmlns:tns="http://example.org/Marketing"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- New Product -->
+  <message name="newProductRequest">
+    <part name="ID_product" type="xsd:string"/>
+    <part name="Product_name" type="xsd:string"/>
+    <part name="Product_price" type="xsd:float"/>
+    <part name="Product_stock" type="xsd:integer"/>
+    <part name="Exp_date" type="xsd:date"/>
+    <part name="Product_status" type="xsd:string"/>
+  </message>
+
+  <message name="updateProductRequest">
+    <part name="ID_product" type="xsd:string"/>
+    <part name="Product_price" type="xsd:float"/>
+    <part name="Product_stock" type="xsd:integer"/>
+  </message>
+
+   <message name="shippingCostRequest">
+    <part name="Shipping_cost" type="xsd:float"/>
+  </message>
+
+  <message name="orderRequest">
+      <part name="ID_order" type="xsd:string"/>
+      <part name="Name" type="xsd:string"/>
+      <part name="Address" type="xsd:string"/>
+      <part name="Tel" type="xsd:string"/>
+      <part name="Order_date" type="xsd:date"/>
+      <part name="Sent_date" type="xsd:date"/>
+      <part name="Total_Price" type="xsd:float"/>
+      <part name="Discount" type="xsd:float"/>
+      <part name="Vat" type="xsd:float"/>
+      <part name="Shipping_cost" type="xsd:float"/>
+      <part name="Net_balance" type="xsd:float"/>
+      <part name="Order_status" type="xsd:string"/>
+    </message>
+
+    <message name="confirmOrdersRequest">
+      <part name="ID_order" type="xsd:string"/>
+    </message>
+
+  <message name="cancelOrderRequest">
+    <part name="ID_order" type="xsd:string"/>
+  </message> 
+  
+  <message name="confirmCancelOrderRequest">
+    <part name="ID_order" type="xsd:string"/>
+  </message>
+
+
+
+  <message name="newProductResponse">
+    <part name="result" />
+  </message>
+
+   <message name="updateProductResponse">
+    <part name="result" />
+  </message>
+
+   <message name="shippingCostResponse">
+    <part name="result" />
+  </message>
+
+  <message name="orderResponse">
+    <part name="result" />
+  </message>
+
+  <message name="confirmOrdersResponse">
+    <part name="result" />
+  </message>
+
+  <message name="cancelOrderResponse">
+    <part name="result" />
+  </message>
+
+  <message name="confirmCancelOrderResponse">
+    <part name="result" />
+  </message>
+
+  <portType name="newProductPortType">
+    <operation name="newProduct">
+      <input message="tns:newProductRequest"/>
+      <output message="tns:newProductResponse"/>
+    </operation>
+  </portType>
+
+  <portType name="updateProductPortType">
+    <operation name="updateProduct">
+      <input message="tns:updateProductRequest"/>
+      <output message="tns:updateProductResponse"/>
+    </operation>
+  </portType>
+
+  
+  <portType name="shippingCostPortType">
+    <operation name="shippingCost">
+      <input message="tns:shippingCostRequest"/>
+      <output message="tns:shippingCostResponse"/>
+    </operation>
+  </portType>
+
+   <portType name="orderPortType">
+    <operation name="order">
+      <input message="tns:orderRequest"/>
+      <output message="tns:orderResponse"/>
+    </operation>
+  </portType>
+
+  <portType name="confirmOrdersPortType">
+    <operation name="confirmOrders">
+      <input message="tns:confirmOrdersRequest"/>
+      <output message="tns:confirmOrdersResponse"/>
+    </operation>
+  </portType>
+
+  <portType name="cancelOrderPortType">
+    <operation name="cancelOrder">
+      <input message="tns:cancelOrderRequest"/>
+      <output message="tns:cancelOrderResponse"/>
+    </operation>
+  </portType>
+
+  
+  <portType name="confirmCancelOrderPortType">
+    <operation name="confirmCancelOrder">
+      <input message="tns:confirmCancelOrderRequest"/>
+      <output message="tns:confirmCancelOrderResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="newProductBinding" type="tns:newProductPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="newProduct">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+<!-- Update Product -->
+  <binding name="updateProductBinding" type="tns:updateProductPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="updateProduct">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+<!-- Shipping Cost-->
+  <binding name="shippingCostBinding" type="tns:shippingCostPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="shippingCost">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+<!-- Order -->
+  <binding name="orderBinding" type="tns:orderPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="order">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+<!-- confirm Orders -->
+  <binding name="confirmOrdersBinding" type="tns:confirmOrdersPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="confirmOrders">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- cancel Orders -->
+  <binding name="cancelOrderBinding" type="tns:cancelOrderPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="cancelOrder">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- cancel Orders -->
+  <binding name="confirmCancelOrderBinding" type="tns:confirmCancelOrderPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="confirmCancelOrder">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- Service Set Up -->
+<service name="NewProductService">
+  <port name="newProductPort" binding="tns:newProductBinding">
+    <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+<service name="UpdateProductService">
+  <port name="updateProductPort" binding="tns:updateProductBinding">
+    <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+<service name="ShippingCostService">
+  <port name="shippingCostPort" binding="tns:shippingCostBinding">
+    <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+<service name="OrderService">
+  <port name="orderPort" binding="tns:orderBinding">
+    <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+<service name="ConfirmOrdersService">
+  <port name="confirmOrdersPort" binding="tns:confirmOrdersBinding">
+   <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+<service name="CancelOrderService">
+  <port name="cancelOrderPort" binding="tns:cancelOrderBinding">
+    <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+<service name="ConfirmCancelOrderService">
+  <port name="confirmCancelOrderPort" binding="tns:confirmCancelOrderBinding">
+    <soap:address location="http://127.0.0.1:3000/Marketing"/>
+  </port>
+</service>
+
+
+</definitions>

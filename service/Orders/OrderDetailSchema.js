@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 
 const OrdersDetailSchema = new mongoose.Schema({
     ID_order: {
-        type: Number,
+        type: String,
         required: true,
     },
     ID_product: {
-        type: Number,
+        type: String,
         required: true,
     },
     Amount: {
