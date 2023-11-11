@@ -139,7 +139,7 @@
   <binding name="newProductBinding" type="tns:newProductPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="newProduct">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -153,7 +153,7 @@
   <binding name="updateProductBinding" type="tns:updateProductPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="updateProduct">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -167,7 +167,7 @@
   <binding name="shippingCostBinding" type="tns:shippingCostPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="shippingCost">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -181,7 +181,7 @@
   <binding name="orderBinding" type="tns:orderPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="order">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -195,7 +195,7 @@
   <binding name="confirmOrdersBinding" type="tns:confirmOrdersPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="confirmOrders">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -209,7 +209,7 @@
   <binding name="cancelOrderBinding" type="tns:cancelOrderPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="cancelOrder">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -223,7 +223,7 @@
   <binding name="confirmCancelOrderBinding" type="tns:confirmCancelOrderPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="confirmCancelOrder">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#auth"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Marketing"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -233,48 +233,47 @@
     </operation>
   </binding>
 
-  <!-- Service Set Up -->
 <service name="NewProductService">
-  <port name="newProductPort" binding="tns:newProductBinding">
-    <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+    <port name="newProductPort" binding="tns:newProductBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;newProduct"/>
+    </port>
+  </service>
 
-<service name="UpdateProductService">
-  <port name="updateProductPort" binding="tns:updateProductBinding">
-    <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+  <service name="UpdateProductService">
+    <port name="updateProductPort" binding="tns:updateProductBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;updateProduct"/>
+    </port>
+  </service>
 
-<service name="ShippingCostService">
-  <port name="shippingCostPort" binding="tns:shippingCostBinding">
-    <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+  <service name="ShippingCostService">
+    <port name="shippingCostPort" binding="tns:shippingCostBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;shippingCost"/>
+    </port>
+  </service>
 
-<service name="OrderService">
-  <port name="orderPort" binding="tns:orderBinding">
-    <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+  <service name="OrderService">
+    <port name="orderPort" binding="tns:orderBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;order"/>
+    </port>
+  </service>
 
-<service name="ConfirmOrdersService">
-  <port name="confirmOrdersPort" binding="tns:confirmOrdersBinding">
-   <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+  <service name="ConfirmOrdersService">
+    <port name="confirmOrdersPort" binding="tns:confirmOrdersBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;confirmOrders"/>
+    </port>
+  </service>
 
-<service name="CancelOrderService">
-  <port name="cancelOrderPort" binding="tns:cancelOrderBinding">
-    <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+  <service name="CancelOrderService">
+    <port name="cancelOrderPort" binding="tns:cancelOrderBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;cancelOrder"/>
+    </port>
+  </service>
 
-<service name="ConfirmCancelOrderService">
-  <port name="confirmCancelOrderPort" binding="tns:confirmCancelOrderBinding">
-    <soap:address location="http://127.0.0.1:3000/Marketing"/>
-  </port>
-</service>
+  <service name="ConfirmCancelOrderService">
+    <port name="confirmCancelOrderPort" binding="tns:confirmCancelOrderBinding">
+      <soap:address location="http://127.0.0.1:3000/Marketing?wsdl&amp;confirmCancelOrder"/>
+    </port>
+  </service>
 
 
 </definitions>

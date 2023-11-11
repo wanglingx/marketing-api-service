@@ -5,16 +5,28 @@ const soapPort = 3000;
 const services = require('./routes');
 const connectDB = require('./config/database');
 
-// Create a SOAP server and listen for SOAP requests
+// Set up SOAP server
+const wsdlPaths = {
+  ShippingCostService: './wsdl/ShippingCostService.wsdl',
+  ConfirmOrdersService: './wsdl/ConfirmOrdersService.wsdl'
+      // ProductService: './wsdl/productService.wsdl',
+};
+    
 app.listen(soapPort, function () {
   connectDB()
     .then(() => {
-      const wsdlPath = './wsdl/MarketingService.wsdl';
-      const xml = require('fs').readFileSync(wsdlPath, 'utf8');
-      const soapServer = soap.listen(app, '/Marketing', services, xml);
-      console.log(`SOAP server listening on port ${soapPort}`);
-    })
-    .catch((err) => {
-      console.error('Error starting the application:', err);
-    });
+    
+
+    for (const serviceName in wsdlPaths) {
+      const wsdlUrl = wsdlPaths[serviceName];
+
+      const xml = require('fs').readFileSync(wsdlUrl, 'utf8');
+      const soapServer = soap.listen(app, `/${serviceName}`, services, xml);
+
+      console.log(`SOAP server for ${serviceName} running at http://localhost:${soapPort}/${serviceName}?wsdl`);
+    }
+  })
+  .catch((err) => {
+    console.error('Error starting the application:', err);
+  });
 });

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ConfirmOrders"
+  targetNamespace="http://example.org/ConfirmOrders"
+  xmlns:tns="http://example.org/ConfirmOrders"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- New Product -->
+    <message name="confirmOrdersRequest">
+      <part name="ID_order" type="xsd:string"/>
+    </message>
+
+  <message name="confirmOrdersResponse">
+    <part name="result" />
+  </message>
+
+  <portType name="confirmOrdersPortType">
+    <operation name="confirmOrders">
+      <input message="tns:confirmOrdersRequest"/>
+      <output message="tns:confirmOrdersResponse"/>
+    </operation>
+  </portType>
+
+
+<!-- confirm Orders -->
+  <binding name="confirmOrdersBinding" type="tns:confirmOrdersPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="confirmOrders">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#ConfirmOrders"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+  </binding>
+
+<service name="ConfirmOrdersService">
+  <port name="confirmOrdersPort" binding="tns:confirmOrdersBinding">
+   <soap:address location="http://127.0.0.1:3000/ConfirmOrdersService"/>
+  </port>
+</service>
+
+</definitions>

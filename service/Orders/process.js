@@ -62,16 +62,13 @@ class OrdersProcess {
         callback(null, result);
     }
 
-    confirmOrders = async (ID_order, callback) => {
+    confirmOrders = async (ID_order) => {
         // ตรวจสอบความถูกต้องของข้อมูล
         if (!ID_order) {
             // return res.status(400).json({
             //     error: "ID_order ไม่ถูกต้อง"
             // });
-            const result = {
-                 error: "ID_order ไม่ถูกต้อง"
-            }
-            callback(null, result);
+            return { error: "ID_order ไม่ถูกต้อง" }
         }
         // ค้นหาข้อมูลการสั่งซื้อ
         const order = await Orders.find({ ID_order: ID_product });
@@ -79,10 +76,7 @@ class OrdersProcess {
             // return res.status(404).json({
             //     error: "ไม่พบข้อมูลการสั่งซื้อ"
             // });
-            const result = {
-                 error: "ไม่พบข้อมูลการสั่งซื้อ"
-            }
-            callback(null, result);
+            return { error: "ไม่พบข้อมูลการสั่งซื้อ" }
         }
         else {
             // Update multiple documents that match a query
@@ -90,25 +84,16 @@ class OrdersProcess {
             .then(data => {
                     if (data.nModified === 0) {
                        // return res.status(404).json({ error: "Order not found" });
-                        const result = {
-                            error: "Order not found"
-                        }
-                        callback(null, result);
+                        return { error: "Order not found" }
                     }
                     console.log('[INFO] Order updated successfully')
                 //return res.status(200).json({ success: true });
-                    const result = {
-                            success: true
-                    }
-                    callback(null, result);
+                return { success: true }
                 })
                 .catch(error => {
                     console.error('[ERROR] Error updating product:', error);
                     //return res.status(500).json({ error: "An error occurred while updating the order" });
-                    const result = {
-                            error: "An error occurred while updating the order"
-                    }
-                    callback(null, result);
+                    return { error: "An error occurred while updating the order" }
                 });
         }
     }
