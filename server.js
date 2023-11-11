@@ -15,14 +15,10 @@ const wsdlPaths = {
 app.listen(soapPort, function () {
   connectDB()
     .then(() => {
-    
-
     for (const serviceName in wsdlPaths) {
       const wsdlUrl = wsdlPaths[serviceName];
-
       const xml = require('fs').readFileSync(wsdlUrl, 'utf8');
       const soapServer = soap.listen(app, `/${serviceName}`, services, xml);
-
       console.log(`SOAP server for ${serviceName} running at http://localhost:${soapPort}/${serviceName}?wsdl`);
     }
   })

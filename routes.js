@@ -6,7 +6,6 @@ const services = {
   ShippingCostService: {
     shippingCostPort: {
       shippingCost: async function (args) {
-        
         repo.ShippingCostRepo.Shipping_cost = args.Shipping_cost;
         const result = await new ShippingProcess().shippingCost(repo.ShippingCostRepo);
         return { result: result }
@@ -23,7 +22,6 @@ const services = {
     }
   }
 };
-
 module.exports = services;
 
 
