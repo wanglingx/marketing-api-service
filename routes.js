@@ -8,21 +8,21 @@ const services = {
     productPort: {
       newProduct: async function (args) {
         console.log(`[INFO] Call function newProduct()`)
-        repo.ProductRepo.ID_product = args.ID_product
-        repo.ProductRepo.Product_name = args.Product_name
-        repo.ProductRepo.Product_price = args.Product_price
-        repo.ProductRepo.Product_stock = args.Product_stock
-        repo.ProductRepo.Exp_date = args.Exp_date
-        repo.ProductRepo.Product_status = args.Product_status
-        const result = await new ProductProcess().newProduct(repo.ProductRepo)
+        repo.newProductRepo.ID_product = args.ID_product
+        repo.newProductRepo.Product_name = args.Product_name
+        repo.newProductRepo.Product_price = args.Product_price
+        repo.newProductRepo.Product_stock = args.Product_stock
+        repo.newProductRepo.Exp_date = args.Exp_date
+        repo.newProductRepo.Product_status = args.Product_status
+        const result = await new ProductProcess().newProduct(repo.newProductRepo)
         return { result: result }
       },
       updateProduct: async function (args) {
         console.log(`[INFO] Call function updateProduct()`)
-        repo.ProductRepo.ID_product = args.ID_product
-        repo.ProductRepo.Product_price = args.Product_price
-        repo.ProductRepo.Product_stock = args.Product_stock
-        const result = await new ProductProcess().updateProduct(repo.ProductRepo)
+        repo.updateProductRepo.ID_product = args.ID_product
+        repo.updateProductRepo.Product_price = args.Product_price
+        repo.updateProductRepo.Product_stock = args.Product_stock
+        const result = await new ProductProcess().updateProduct(repo.updateProductRepo)
         return { result: result }
       }
     },

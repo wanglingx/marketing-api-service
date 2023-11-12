@@ -43,7 +43,7 @@ soap.createClient(url, function (err, client) {
 
  const args3 = {
   order: {
-    "ID_order": 'PT120',
+    "ID_order": 'PT131',
     "Name": "John Doe",
     "Address": "123 Main Street, Bangkok, 10330",
     "Tel": "081-234-5678",

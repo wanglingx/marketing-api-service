@@ -25,11 +25,11 @@
     </message>
 
     <message name="newProductResponse">
-        <part name="result" default="null"/>
+        <part name="result" />
     </message>
 
     <message name="updateProductResponse">
-        <part name="result" default="null"/>
+        <part name="result"/>
     </message>
 
     <portType name="productPortType">
@@ -55,10 +55,11 @@
             <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
         </output>
     </operation>
+
     <operation name="updateProduct">
-        <soap:operation soapAction="urn:xmethods-delayed-quotes#Product"/>
+        <soap:operation soapAction="urn:xmethods-delayed-quotes#updateProduct"/>
     <input>
-        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes#Product" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
     </input>
     <output>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>

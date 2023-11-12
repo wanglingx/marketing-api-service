@@ -22,7 +22,7 @@ module.exports = {
             }
         ]
     },
-    ProductRepo: {
+    newProductRepo: {
         ID_product: '',
         Product_name: '',
         Product_price: '',
@@ -31,6 +31,11 @@ module.exports = {
         Exp_date: '',
         Product_status: '',
         created_at: ''
+    },
+    updateProductRepo: {
+        ID_product: '',
+        Product_price: '',
+        Product_stock: '',
     },
     ShippingCostRepo: {
         Shipping_cost: '',

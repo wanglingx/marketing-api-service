@@ -2,7 +2,6 @@ const Orders = require('../Orders/OrdersSchema')
 const OrderDetails = require('../Orders/OrderDetailSchema')
 
 class OrdersProcess {
-
     order = async(OrderRepo) => {
         // ตรวจสอบความถูกต้องของข้อมูล
         if (!OrderRepo.ID_order || !OrderRepo.Name || !OrderRepo.Address || !OrderRepo.Tel || !OrderRepo.Order_date || !OrderRepo.Sent_date
@@ -10,14 +9,12 @@ class OrdersProcess {
             console.log(`[ERROR] Order data required empty field`)
             return { error: "Order data required empty field" }
         }
-
         // ค้นหาข้อมูลการสั่งซื้อ
         const orderRepeatId = await Orders.findOne({ ID_order: OrderRepo.ID_order });
         if (orderRepeatId) {
             console.error(`[ERROR] ID Order : ${OrderRepo.ID_order} was used`)
             return { error: `ID Order : ${OrderRepo.ID_order} was used` }
         }
-
         console.log(`[INFO] Orders Data Found`)
         // เพิ่มข้อมูลลงฐานข้อมูล Header DB
         const order = new Orders({
@@ -52,7 +49,21 @@ class OrdersProcess {
         console.log(`[INFO] Save Order Detail to database success`)
         // ยิง API ไปหาคนอื่น
         // ตอบกลับ
-        return { info:`[INFO] Save Order Detail to database success`,success: true}
+        return {
+            info: `Save Order Detail to database success`, data_order: {
+                ID_order    : OrderRepo.ID_order,
+                Name        : OrderRepo.Name,
+                Address     : OrderRepo.Address,
+                Tel         : OrderRepo.Tel,
+                Order_date  : OrderRepo.Order_date,
+                Sent_date   : OrderRepo.Sent_date,
+                Total_Price : OrderRepo.Total_Price,
+                Discount    : OrderRepo.Discount,
+                Vat         : OrderRepo.Vat,
+                Shipping_cost   : OrderRepo.Shipping_cost,
+                Net_balance     : OrderRepo.Net_balance,
+                Order_status: OrderRepo.Order_status,
+        }}
     }
 
     confirmOrders = async (ID_order) => {

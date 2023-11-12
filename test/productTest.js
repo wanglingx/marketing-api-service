@@ -6,11 +6,10 @@ soap.createClient(url, function (err, client) {
   if (err) {
     console.error('Error creating SOAP client:', err);
     return;
-  }
+    }
 
-  // Make a SOAP request
   const args1 = {
-        ID_product: "PD01",
+        ID_product: "PD14",
         Product_name: "iPhone 14 Pro Max",
         Product_price: 49900,
         Product_stock: 100,
@@ -22,11 +21,9 @@ soap.createClient(url, function (err, client) {
         console.error('Error making SOAP1 request:', err);
         return;
         }
-        // Access the result from the SOAP response
         console.log('SOAP1 Response:', result);
     });
     
-    // Make a SOAP request
     const args2 = {
         ID_product: 'PD01',
         Product_price: 48000,
@@ -37,7 +34,6 @@ soap.createClient(url, function (err, client) {
         console.error('Error making SOAP2 request:', err);
         return;
         }
-        // Access the result from the SOAP response
         console.log('SOAP2 Response:', result);
     });
 });

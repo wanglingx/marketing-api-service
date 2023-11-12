@@ -28,7 +28,16 @@ class ProductProcess {
                 });
                 await product.save();
                 console.log(`[INFO] Save New Products to database success`)
-                return { info: "Save New Products to database success", response: ProductRepo }
+                const fetchedProduct = await Products.findOne({ ID_product: ProductRepo.ID_product });
+                return {
+                    info: "Save New Products to database success", data_product: {
+                        ID_product: fetchedProduct.ID_product,
+                        Product_name: fetchedProduct.Product_name,
+                        Product_price: fetchedProduct.Product_price,
+                        Product_stock: fetchedProduct.Product_stock,
+                        Product_status: fetchedProduct.Product_status,
+                    }
+                };
             }
         }
     }
@@ -49,32 +58,24 @@ class ProductProcess {
         }
         else {
             console.log(`[INFO] Getting Products By ID ${product}`)
-             // อัพเดทข้อมูลสินค้า
             const updatedProduct = {
                 Product_price: ProductRepo.Product_price,
                 Product_stock: ProductRepo.Product_stock,
-            };
+            }
+            // Update the product in the database
+            const updatedProductResult = await Products.updateOne({ ID_product: ProductRepo.ID_product }, { $set: updatedProduct });
 
-            Products.updateOne({ ID_product: ProductRepo.ID_product }, { $set: updatedProduct })
-                .then(async result => {
-                    if (result.nModified === 0) {
-                        return { error: "Product Not Found" }
-                    }
-                    // Fetch the updated product
-                    await Products.findOne({ ID_product: ProductRepo.ID_product })
-                        .then(updatedProduct => {
-                        console.log('[INFO] Product updated successfully')
-                        return { info: "Product updated successfully" , response : updatedProduct }
-                    })
-                    .catch(error => {
-                        console.error('[ERROR] Error fetching updated product:', error);
-                        return { error: "An error occurred while fetching the updated product" }
-                    });
-                })
-                .catch(error => {
-                    console.error('[ERROR] Error updating product:', error);
-                    return { error: "An error occurred while updating the product" }
-            });
+            if (updatedProductResult.nModified === 0) {
+                return { error: 'Product Not Found' };
+            }
+            const fetchedUpdatedProduct = await Products.findOne({ ID_product: ProductRepo.ID_product });
+            console.log(`[INFO] Product updated successfully ${fetchedUpdatedProduct}`);
+            return {
+                info: 'Product updated successfully', data_product: {
+                    ID_product: fetchedUpdatedProduct.ID_product,
+                    Product_price: fetchedUpdatedProduct.Product_stock,
+                    Product_status: fetchedUpdatedProduct.Product_status
+            }};
         }
     }
 }
