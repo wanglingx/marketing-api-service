@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions name="ShippingCost"
-  targetNamespace="http://example.org/ShippingCost"
-  xmlns:tns="http://example.org/ShippingCost"
+<definitions name="Shipping"
+  targetNamespace="http://example.org/Shipping"
+  xmlns:tns="http://example.org/Shipping"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
   xmlns="http://schemas.xmlsoap.org/wsdl/">
 
   <!-- New Product -->
-   <message name="shippingCostRequest">
+  <message name="shippingCostRequest">
     <part name="Shipping_cost" type="xsd:integer"/>
   </message>
 
-   <message name="shippingCostResponse">
+  <message name="shippingCostResponse">
     <part name="result" />
   </message>
 
-  <portType name="shippingCostPortType">
+  <portType name="shippingPortType">
     <operation name="shippingCost">
       <input message="tns:shippingCostRequest"/>
       <output message="tns:shippingCostResponse"/>
     </operation>
   </portType>
 
-<!-- Shipping Cost-->
-  <binding name="shippingCostBinding" type="tns:shippingCostPortType">
+  <!-- Shipping Cost -->
+  <binding name="shippingBinding" type="tns:shippingPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="shippingCost">
-      <soap:operation soapAction="urn:xmethods-delayed-quotes#ShippingCost"/>
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#shippingCost"/>
       <input>
         <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
@@ -39,10 +38,9 @@
   </binding>
 
   <!-- Service Set Up -->
-<service name="ShippingCostService">
-  <port name="shippingCostPort" binding="tns:shippingCostBinding">
-    <soap:address location="http://localhost:3000/ShippingCostService"/>
-  </port>
-</service>
-
+  <service name="ShippingService">
+    <port name="shippingPort" binding="tns:shippingBinding">
+      <soap:address location="http://localhost:3000/ShippingService"/>
+    </port>
+  </service>
 </definitions>

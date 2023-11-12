@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="Product"
+  targetNamespace="http://example.org/Product"
+  xmlns:tns="http://example.org/Product"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- New Product -->
+    <message name="newProductRequest">
+        <part name="ID_product" type="xsd:string"/>
+        <part name="Product_name" type="xsd:string"/>
+        <part name="Product_price" type="xsd:float"/>
+        <part name="Product_stock" type="xsd:integer"/>
+        <part name="Exp_date" type="xsd:date"/>
+        <part name="Product_status" type="xsd:string"/>
+    </message>
+
+    <message name="updateProductRequest">
+        <part name="ID_product" type="xsd:string"/>
+        <part name="Product_price" type="xsd:float"/>
+        <part name="Product_stock" type="xsd:integer"/>
+    </message>
+
+    <message name="newProductResponse">
+        <part name="result" default="null"/>
+    </message>
+
+    <message name="updateProductResponse">
+        <part name="result" default="null"/>
+    </message>
+
+    <portType name="productPortType">
+        <operation name="newProduct">
+            <input message="tns:newProductRequest"/>
+            <output message="tns:newProductResponse"/>
+        </operation>
+        <operation name="updateProduct">
+            <input message="tns:updateProductRequest"/>
+            <output message="tns:updateProductResponse"/>
+        </operation>
+    </portType>
+
+<!-- confirm Orders -->
+ <binding name="productBinding" type="tns:productPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="newProduct">
+        <soap:operation soapAction="urn:xmethods-delayed-quotes#newProduct"/>
+        <input>
+            <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+        </input>
+        <output>
+            <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+        </output>
+    </operation>
+    <operation name="updateProduct">
+        <soap:operation soapAction="urn:xmethods-delayed-quotes#Product"/>
+    <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes#Product" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+    </input>
+    <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+    </output>
+    </operation>
+</binding>
+
+    <service name="ProductService">
+        <port name="productPort" binding="tns:productBinding">
+        <soap:address location="http://127.0.0.1:3000/ProductService"/>
+        </port>
+    </service>
+
+</definitions>

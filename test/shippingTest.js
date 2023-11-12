@@ -1,7 +1,7 @@
 const soap = require('soap');
 
 // Create the SOAP client
-const url = 'http://localhost:3000/ConfirmOrdersService?wsdl';
+const url = 'http://localhost:3000/ShippingService?wsdl';
 
 soap.createClient(url, function (err, client) {
   if (err) {
@@ -10,9 +10,9 @@ soap.createClient(url, function (err, client) {
   }
 
   // Make a SOAP request
-  const args = { ID_order : ''};
+  const args = { Shipping_cost: 4.9 };
 
-  client.confirmOrders(args, function (err, result) {
+  client.shippingCost(args, function (err, result) {
     if (err) {
       console.error('Error making SOAP request:', err);
       return;

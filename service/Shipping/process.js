@@ -1,12 +1,10 @@
 const ShippingCost = require('./ShippingCostSchema')
 
 class ShippingProcess {
-    shippingCost = async (shippingCostRepo, callback) => {
-        if (!shippingCostRepo.Shipping_cost) {
-            console.log(`[ERROR] Shipping Cost Data Not Found`)
-            // return res.status(400).json({
-            //     error: "Shipping Cost Data Not Found"
-            // });
+    shippingCost = async (shippingCostRepo) => {
+        console.log(shippingCostRepo.Shipping_cost)
+        if (!shippingCostRepo.Shipping_cost || shippingCostRepo.Shipping_cost == 0 ) {
+            console.error(`[ERROR] Shipping Cost Data Not Found`)
             return { error: "Shipping Cost Data Not Found" }
         }
         else {
@@ -17,7 +15,6 @@ class ShippingProcess {
             });
             await shippingCost.save();
             console.log(`[INFO] Save Shipping Cost to database success`)
-            //return res.status(200).send({ response : shippingCost });
             return {info: "Saving Shipping Cost success", Shipping_cost: shippingCost.Shipping_cost, }
         }
     }

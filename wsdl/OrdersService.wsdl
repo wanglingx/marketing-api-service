@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="Orders"
+  targetNamespace="http://example.org/Orders"
+  xmlns:tns="http://example.org/Orders"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <types>
+    <schema>
+      <complexType name="OrderDetailsType">
+            <sequence>
+                <element name="ID_product" type="xsd:string"/>
+                <element name="Amount" type="xsd:int"/>
+                <element name="Total_price" type="xsd:float"/>
+                <element name="Discount" type="xsd:float"/>
+            </sequence>
+      </complexType>
+      </schema>
+    </types>  
+  <!-- New Order -->
+  <message name="orderRequest">
+      <part name="ID_order" type="xsd:string"/>
+      <part name="Name" type="xsd:string"/>
+      <part name="Address" type="xsd:string"/>
+      <part name="Tel" type="xsd:string"/>
+      <part name="Order_date" type="xsd:date"/>
+      <part name="Sent_date" type="xsd:date"/>
+      <part name="Total_Price" type="xsd:float"/>
+      <part name="Discount" type="xsd:float"/>
+      <part name="Vat" type="xsd:float"/>
+      <part name="Shipping_cost" type="xsd:float"/>
+      <part name="Net_balance" type="xsd:float"/>
+      <part name="Order_status" type="xsd:string"/>
+      <part name="details" type="tns:OrderDetailsType" minOccurs="0"/>
+  </message>
+
+  <message name="confirmOrdersRequest">
+    <part name="ID_order" type="xsd:string"/>
+  </message>
+
+  <message name="cancelOrderRequest">
+    <part name="ID_order" type="xsd:string"/>
+  </message> 
+
+  <message name="confirmCancelOrderRequest">
+    <part name="ID_order" type="xsd:string"/>
+  </message>
+
+  
+  <message name="orderResponse">
+    <part name="result" />
+  </message>
+
+  <message name="confirmOrdersResponse">
+    <part name="result" />
+  </message>
+
+   <message name="cancelOrderResponse">
+    <part name="result" />
+  </message>
+
+  <message name="confirmCancelOrderResponse">
+    <part name="result" />
+  </message>
+
+  <portType name="OrdersPortType">
+    <operation name="order">
+      <input message="tns:orderRequest"/>
+      <output message="tns:orderResponse"/>
+    </operation>
+
+    <operation name="confirmOrders">
+      <input message="tns:confirmOrdersRequest"/>
+      <output message="tns:confirmOrdersResponse"/>
+    </operation>
+
+    <operation name="cancelOrder">
+      <input message="tns:cancelOrderRequest"/>
+      <output message="tns:cancelOrderResponse"/>
+    </operation>
+
+     <operation name="confirmCancelOrder">
+      <input message="tns:confirmCancelOrderRequest"/>
+      <output message="tns:confirmCancelOrderResponse"/>
+    </operation>
+  </portType>
+
+<!-- confirm Orders -->
+  <binding name="OrdersBinding" type="tns:OrdersPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="order">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#Orders"/>
+      <input>
+        <soap:body use="encoded" namespace="http://example.org/Orders" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+
+    <operation name="confirmOrders">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#confirmOrders"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+
+     <operation name="cancelOrder">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#cancelOrder"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+
+    <operation name="confirmCancelOrder">
+      <soap:operation soapAction="urn:xmethods-delayed-quotes#confirmCancelOrder"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"/>
+      </output>
+    </operation>
+
+  </binding>
+
+<service name="OrdersService">
+  <port name="OrdersPort" binding="tns:OrdersBinding">
+   <soap:address location="http://127.0.0.1:3000/OrdersService"/>
+  </port>
+</service>
+
+</definitions>
