@@ -58,31 +58,31 @@
 
 
   <message name="newProductResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
    <message name="updateProductResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
    <message name="shippingCostResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
   <message name="orderResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
   <message name="confirmOrdersResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
   <message name="cancelOrderResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
   <message name="confirmCancelOrderResponse">
-    <part name="result" />
+    <part name="result" type="xsd:string"/>
   </message>
 
   <portType name="newProductPortType">
