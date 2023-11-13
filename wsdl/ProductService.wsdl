@@ -25,11 +25,11 @@
     </message>
 
     <message name="newProductResponse">
-        <part name="result" />
+        <part name="result" type="xsd:string"/>
     </message>
 
     <message name="updateProductResponse">
-        <part name="result"/>
+        <part name="result"type="xsd:string"/>
     </message>
 
     <portType name="productPortType">
